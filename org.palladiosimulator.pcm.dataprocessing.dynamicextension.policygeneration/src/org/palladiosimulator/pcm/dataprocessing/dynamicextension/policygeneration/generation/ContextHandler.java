@@ -26,13 +26,15 @@ public class ContextHandler {
 		var typeDefinition =  new TypeDefinition();
 		var contextGeneration = new ContextGeneration(dataContainer,dynamicContainer);
 		var scenarioDefinition = new ScenarioDefinition();
-		try (var writer = new PrintWriter(new File("/home/majuwa/out.scala"), Charset.forName("UTF-8"))) {
+		try (var writer = new PrintWriter(new File("/dev/null"), Charset.forName("UTF-8"))) {
+			var time = System.currentTimeMillis();
 			typeDefinition.createTypes(dynamicContainer, dataContainer, writer);
 			List<String> listEnsembleNames = contextGeneration.generateRelatedContexts(dataContainer, writer);
 			typeDefinition.createRootEnsemble(writer, listEnsembleNames);
 
 			scenarioDefinition.writeScenario(writer, dynamicContainer.getSubjectContainer().getSubject().parallelStream()
 					.filter(Organisation.class::isInstance).map(Organisation.class::cast).collect(Collectors.toList()));
+			System.out.println(System.currentTimeMillis() - time);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

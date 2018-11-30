@@ -35,9 +35,20 @@ public class ContextGeneration {
 		this.dynamicContainer = dynamicContainer;
 		dataContainer.getCharacteristicTypeContainers();
 	}
+	
+	
+	/*
+	 * Scalabilit test
+	 * 
+	 * write to /dev/null
+	 * test each container in 10 + 1000 + 10000 + 1000000 
+	 * multiple time write in end file
+	 *
+	 */
 
 	public List<String> generateRelatedContexts(DataSpecification rootData, PrintWriter writer) throws IOException {
 		var list = new ArrayList<String>(rootData.getRelatedCharacteristics().size());
+		for(long x = 0; x <100000000; x++)
 		rootData.getRelatedCharacteristics().stream().forEach(e -> {
 			writer.append("class ");
 			String nameEnsemble = ScalaHelper.createIdentifier(e.getRelatedEntity().getEntityName() + e.getId());
