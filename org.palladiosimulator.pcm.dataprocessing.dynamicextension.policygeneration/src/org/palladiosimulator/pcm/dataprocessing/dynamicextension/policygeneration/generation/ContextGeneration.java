@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.palladiosimulator.pcm.dataprocessing.dataprocessing.DataSpecification;
 import org.palladiosimulator.pcm.dataprocessing.dataprocessing.characteristics.RelatedCharacteristics;
 import org.palladiosimulator.pcm.dataprocessing.dynamicextension.DynamicSpecification;
@@ -47,8 +49,8 @@ public class ContextGeneration {
 	 */
 
 	public List<String> generateRelatedContexts(DataSpecification rootData, PrintWriter writer) throws IOException {
+
 		var list = new ArrayList<String>(rootData.getRelatedCharacteristics().size());
-		for(long x = 0; x <100000000; x++)
 		rootData.getRelatedCharacteristics().stream().forEach(e -> {
 			writer.append("class ");
 			String nameEnsemble = ScalaHelper.createIdentifier(e.getRelatedEntity().getEntityName() + e.getId());
